@@ -7,10 +7,5 @@ block content
 				h1= title
 	.row
 		.col-md-6.col-sm-12
-			p
-				| Free-Wifi is created to help people find places to sit down and get a bit of work done. You can contribute to this site by simply giving your 
-				your review and rating on the businesses that are listed here. If you are a service provider with free wifi to share, you can improve your exprosure by adding 
-				business details of your business in our page.
-				| <br /><br />
-				| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed
-lorem ac nisi dignissim accumsan.
+			p !{(content).replace(/\n/g, '<br/>')}
+				
