@@ -32,8 +32,8 @@ module.exports.homelist = function(req, res){
 /* GET 'Location info' page */
 module.exports.locationInfo = function(req, res){
     res.render('location-info', { 
-        title: 'Free-Wifi - find a place to work with wifi',
-        pageHeader: {title: 'Free-Wifi'}, 
+        title: 'Starcups',
+        pageHeader: {title: 'Starcups'}, 
 		sidebar: {
 			context: 'is on Free-Wifi because it has accessible wifi and space to sit down with your laptop and get some work done.',
 			callToAction: 'If you\'ve been and you like it - or if you don\'t - please leave a review to help other people just like you.'
