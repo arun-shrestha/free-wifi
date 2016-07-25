@@ -1,6 +1,10 @@
 var mongoose = require( 'mongoose' );
 var gracefulShutdown;
 var dbURI = 'mongodb://localhost/Free-Wifi';
+
+if (process.env.NODE_ENV === 'production') {
+  dbURI = process.env.MONGOLAB_URI;
+}
 mongoose.connect(dbURI);
 
 mongoose.connection.on('connected', function () {
@@ -22,6 +26,17 @@ gracefulShutdown = function (msg, callback) {
   });
 };
 
+var readLine = require ("readline");
+if (process.platform === "win32"){
+  var rl = readLine.createInterface ({
+    input: process.stdin,
+    output: process.stdout
+  });
+  rl.on ("SIGINT", function (){
+    process.emit ("SIGINT");
+  });
+}
+
 // For nodemon restarts
 process.once('SIGUSR2', function () {
   gracefulShutdown('nodemon restart', function () {
@@ -42,3 +57,5 @@ process.on('SIGTERM', function() {
     process.exit(0);
   });
 });
+
+require('./locations');
