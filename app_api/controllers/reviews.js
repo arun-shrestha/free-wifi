@@ -6,6 +6,24 @@ var sendJsonResponse = function(res, status, content) {
     res.json(content);
 };
 
-module.exports.locationsCreate = function (req, res) {
-    sendJsonResponse(res, 200, {"status" : "success"});
+module.exports.reviewsCreate = function(req, res) {
+    var locationid = req.params.locationid;
+    if (locationid) {
+        Loc
+            .findById(locationid)
+            .select('reviews')
+            .exec(
+                function(err, location) {
+                    if (err) {
+                        sendJsonResponse(res, 400, err);
+                    } else {
+                        doAddReview(req, res, location);
+                    }
+                }
+            );
+    } else {
+        sendJsonResponse(res, 404, {
+            "message": "Not found, locationid required"
+        });
+    }
 };
