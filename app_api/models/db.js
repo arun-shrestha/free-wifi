@@ -1,9 +1,9 @@
 var mongoose = require( 'mongoose' );
-var gracefulShutdown;
+
 var dbURI = 'mongodb://localhost/Free-Wifi';
 
 if (process.env.NODE_ENV === 'production') {
-  dbURI = process.env.MONGOLAB_URI;
+  dbURI = 'mongodb://shresthaarun:shrestha1@ds042379.mlab.com:42379/free-wifi';
 }
 mongoose.connect(dbURI);
 
@@ -19,6 +19,8 @@ mongoose.connection.on('disconnected', function () {
   console.log('Mongoose disconnected');
 });
 
+
+var gracefulShutdown;
 gracefulShutdown = function (msg, callback) {
   mongoose.connection.close(function () {
     console.log('Mongoose disconnected through ' + msg);
