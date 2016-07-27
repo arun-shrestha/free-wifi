@@ -6,6 +6,37 @@ var sendJsonResponse = function(res, status, content) {
     res.json(content);
 };
 
+var theEarth = (function(){
+    var earthRadius = 6371; // km, miles is 3959
+    var getDistanceFromRads = function(rads) {
+        return parseFloat(rads * earthRadius);
+    };
+
+    var getRadsFromDistance = function(distance) {
+        return parseFloat(distance / earthRadius);
+    };
+    return {
+        getDistanceFromRads : getDistanceFromRads,
+    getRadsFromDistance : getRadsFromDistance
+    };
+})();
+
+module.exports.locationsListByDistance = function(req, res) {
+    var lng = parseFloat(req.query.lng);
+    var lat = parseFloat(req.query.lat);
+    var point = {
+        type: "Point",
+        coordinates: [lng, lat]
+    };
+
+    var geoOptions = {
+        spherical: true,
+        maxDistance: theEarth.getRadsFromDistance(20),
+        num: 10
+    };
+    Loc.geoNear(point, geoOptions, callback);
+};
+
 module.exports.locationsReadOne = function(req, res) {
     if (req.params && req.params.locationid && req.params.reviewid) {
         Loc
