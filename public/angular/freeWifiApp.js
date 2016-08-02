@@ -1,4 +1,4 @@
-angular.module('loc8rApp', []);
+angular.module('freeWifiApp', []);
 
 var _isNumeric = function (n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
@@ -47,14 +47,14 @@ var geolocation = function () {
   };
 };
 
-var locationListCtrl = function ($scope, loc8rData, geolocation) {
+var locationListCtrl = function ($scope, freeWifiData, geolocation) {
   $scope.message = "Checking your location";
 
   $scope.getData = function (position) {
     var lat = position.coords.latitude,
         lng = position.coords.longitude;
     $scope.message = "Searching for nearby places";
-    loc8rData.locationByCoords(lat, lng)
+    freeWifiData.locationByCoords(lat, lng)
       .success(function(data) {
         $scope.message = data.length > 0 ? "" : "No locations found nearby";
         $scope.data = { locations: data };
@@ -79,7 +79,7 @@ var locationListCtrl = function ($scope, loc8rData, geolocation) {
   geolocation.getPosition($scope.getData,$scope.showError,$scope.noGeo);
 };
 
-var loc8rData = function ($http) {
+var freeWifiData = function ($http) {
   var locationByCoords = function (lat, lng) {
     return $http.get('/api/locations?lng=' + lng + '&lat=' + lat + '&maxDistance=20');
   };
@@ -133,10 +133,10 @@ var loc8rData = function ($http) {
 };
 
 angular
-  .module('loc8rApp')
+  .module('freeWifiApp')
   .controller('locationListCtrl', locationListCtrl)
   .filter('formatDistance', formatDistance)
   .directive('ratingStars', ratingStars)
-  .service('loc8rData', loc8rData)
+  .service('freeWifiData', freeWifiData)
   .service('geolocation', geolocation);
 
