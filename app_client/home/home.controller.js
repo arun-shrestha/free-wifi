@@ -6,7 +6,12 @@
 
   homeCtrl.$inject = ['$scope', 'freeWifiData', 'geolocation'];
   function homeCtrl ($scope, freeWifiData, geolocation) {
+    // Nasty IE9 redirect hack (not recommended)
+    if (window.location.pathname !== '/') {
+      window.location.href = '/#' + window.location.pathname;
+    }
     var vm = this;
+    console.log(window.location);
     vm.pageHeader = {
       title: 'Free-Wifi',
       strapline: 'Find places to work with wifi near you!'
