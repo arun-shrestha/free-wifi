@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var gracefulShutdown;
 var dbURI = 'mongodb://localhost/Free-Wifi';
 if (process.env.NODE_ENV === 'production') {
-    dbURI = 'mongodb://shresthaarun:shrestha1@ds042379.mlab.com:42379/free-wifi';
+    dbURI = process.env.MONGOLAB_URI;
 }
 
 mongoose.connect(dbURI);
